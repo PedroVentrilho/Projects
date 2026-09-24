@@ -4,26 +4,40 @@
    --first-color: darkred;
    --secondary-color: white;
    --terciary-color: black;
+   --glow-color: #ff2a2a;
+   --muted-color: #b9b9b9;
+   --card-color: #0e0e0e;
 }
-*{ 
+*{
     margin: 0;
     border: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
 }
 html, body {
     height: 100%;
 }
 body {
     /*height: 100vh;*/
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     background-color:  var(--terciary-color);
     color: var(--secondary-color);
 }
+img {
+    max-width: 100%;
+    display: block;
+}
 .Cabecalho {
     background-color: var(--first-color);
     padding: 0.5% 0 0.5% 15%;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 18px rgba(139, 0, 0, 0.6);
 }
 .Navegacao {
     display: flex;
@@ -34,6 +48,11 @@ body {
     text-decoration: none;
     font-family: "Audiowide", sans-serif;
     font-size: 1.25rem;
+    transition: text-shadow 0.4s;
+}
+.link:hover,
+.link.ativo {
+    text-shadow: 0 0 10px var(--secondary-color);
 }
 .destaque {
     color: var(--first-color);
@@ -68,7 +87,7 @@ body {
 .Jane {
     font-size: 1.25rem;
     font-family: "Audiowide", sans-serif;
-    text-align: justify;   
+    text-align: justify;
 }
 .button {
     display: flex;
@@ -81,6 +100,7 @@ body {
     /* background-color: black; */
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
     width: 55%;
     color: var(--secondary-color);
@@ -109,13 +129,343 @@ body {
     font-family: "Audiowide", sans-serif;
 }
 
+/* ---------- .hack//G.U. ---------- */
+
+/* Banner de tela cheia com imagem de fundo */
+.Portal {
+    position: relative;
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    padding: 0 15%;
+    background-size: cover;
+    background-position: center;
+    isolation: isolate;
+}
+.Portal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0.1) 100%),
+        linear-gradient(0deg, var(--terciary-color) 0%, transparent 30%);
+}
+.Portal--curto {
+    min-height: 60vh;
+}
+.Portal .Kraus {
+    width: 55%;
+}
+.Portal .Juno {
+    font-size: 5rem;
+    line-height: 1;
+    text-shadow: 0 0 25px rgba(139, 0, 0, 0.9);
+}
+.Selo {
+    font-family: "Audiowide", sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--glow-color);
+}
+.Botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.Botoes .button2 {
+    width: auto;
+    padding: 15px 28px;
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+/* Seção padrão */
+.Capitulo {
+    padding: 5% 15%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.Capitulo--alt {
+    background: linear-gradient(180deg, var(--terciary-color), #140000 50%, var(--terciary-color));
+}
+.Subtitulo {
+    font-family: "Audiowide", sans-serif;
+    font-size: 1.4rem;
+    color: var(--glow-color);
+}
+.Dividir {
+    display: flex;
+    align-items: center;
+    gap: 5%;
+}
+.Dividir--inverso {
+    flex-direction: row-reverse;
+}
+/* Textos longos: a imagem fica presa no topo enquanto o texto rola */
+.Dividir--longo {
+    align-items: flex-start;
+}
+.Dividir--longo > .Moldura {
+    position: sticky;
+    top: 90px;
+}
+.Dividir > .Texto {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.Moldura {
+    flex: 1;
+    position: relative;
+    border: 3px solid var(--first-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(139, 0, 0, 0.45);
+}
+.Moldura img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.3s;
+}
+.Moldura:hover img {
+    transform: scale(1.05);
+}
+.Moldura figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 30px 15px 10px;
+    font-family: "Audiowide", sans-serif;
+    font-size: 0.85rem;
+    background: linear-gradient(0deg, rgba(0,0,0,0.9), transparent);
+}
+
+/* Cards dos volumes */
+.Grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+.Cartao {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--card-color);
+    border: 3px solid var(--first-color);
+    border-radius: 8px;
+    overflow: hidden;
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: transform 0.6s, box-shadow 0.6s;
+}
+.Cartao:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 35px rgba(255, 42, 42, 0.35);
+}
+.Cartao img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+.Cartao img.Cartao-arte {
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    padding: 16px;
+    background: #fff;
+}
+.Cartao-corpo {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.Cartao-corpo .title2 {
+    color: var(--glow-color);
+}
+.Cartao-corpo p {
+    font-family: "Audiowide", sans-serif;
+    font-size: 0.95rem;
+    color: var(--muted-color);
+    line-height: 1.5;
+}
+
+/* Linha do tempo da história */
+.Linha {
+    list-style: none;
+    border-left: 3px solid var(--first-color);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-left: 30px;
+}
+.Linha li {
+    position: relative;
+    font-family: "Audiowide", sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    text-align: justify;
+}
+.Linha li::before {
+    content: "";
+    position: absolute;
+    left: -40px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--terciary-color);
+    border: 3px solid var(--glow-color);
+    box-shadow: 0 0 10px var(--glow-color);
+}
+.Linha strong {
+    color: var(--glow-color);
+}
+
+/* Aviso de spoiler e citações */
+.Aviso {
+    font-family: "Audiowide", sans-serif;
+    border: 3px dashed var(--first-color);
+    border-radius: 8px;
+    padding: 15px 20px;
+    text-align: center;
+    color: var(--muted-color);
+}
+.Citacao {
+    font-family: "Imperial Script", cursive;
+    font-size: 2.4rem;
+    text-align: center;
+    color: var(--secondary-color);
+    text-shadow: 0 0 18px rgba(139, 0, 0, 0.9);
+    padding: 20px 0;
+}
+
+/* Índice de volumes */
+.Sumario {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+.Sumario .button2 {
+    width: auto;
+    padding: 12px 22px;
+}
+
+/* Cards dos Epitaph Users */
+.Epitaph {
+    background-color: var(--card-color);
+    border: 3px solid var(--first-color);
+    border-radius: 8px;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.6s;
+}
+.Epitaph:hover {
+    box-shadow: 0 0 30px rgba(255, 42, 42, 0.4);
+}
+.Epitaph .Numero {
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    font-family: "Audiowide", sans-serif;
+    font-size: 3.5rem;
+    color: rgba(139, 0, 0, 0.35);
+}
+.Epitaph .Avatar {
+    font-family: "Imperial Script", cursive;
+    font-size: 2.4rem;
+    color: var(--glow-color);
+}
+.Epitaph .Usuario {
+    font-family: "Audiowide", sans-serif;
+    font-size: 1.1rem;
+}
+.Epitaph p {
+    font-family: "Audiowide", sans-serif;
+    font-size: 0.9rem;
+    color: var(--muted-color);
+    line-height: 1.5;
+}
+
+/* Galeria */
+.Galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+}
+.Galeria button {
+    background: none;
+    cursor: zoom-in;
+    border: 3px solid var(--first-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.Galeria img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    width: 100%;
+    transition: transform 1.3s;
+}
+.Galeria button:hover img {
+    transform: scale(1.08);
+}
+.Lupa {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 3%;
+    background-color: rgba(0, 0, 0, 0.92);
+    cursor: zoom-out;
+}
+.Lupa.aberta {
+    display: flex;
+}
+.Lupa img {
+    max-height: 90vh;
+    border: 3px solid var(--first-color);
+    border-radius: 8px;
+    box-shadow: 0 0 40px rgba(255, 42, 42, 0.5);
+}
+
+/* Animação de entrada */
+.js .Surgir {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s, transform 1s;
+}
+.js .Surgir.visivel {
+    opacity: 1;
+    transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    .js .Surgir {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
 @media (max-width: 1011px) {
     .Cabecalho {
-        padding: 10%;
+        padding: 20px 5%;
     }
     .Navegacao {
         justify-content: center;
-        gap: 50px;
+        gap: 10px 20px;
+        flex-wrap: wrap;
+    }
+    .link {
+        font-size: 1rem;
     }
     .Manos {
         flex-direction: column-reverse;
@@ -128,4 +478,83 @@ body {
     .imggur {
         width: 100%;
     }
+    .Portal {
+        padding: 60px 16px;
+        min-height: 75vh;
+    }
+    .Portal .Kraus {
+        width: 100%;
+    }
+    .Portal .Juno {
+        font-size: 3.5rem;
+    }
+    .Capitulo {
+        padding: 50px 16px;
+    }
+    .Dividir,
+    .Dividir--inverso {
+        flex-direction: column;
+        gap: 25px;
+    }
+    .Dividir--longo {
+        align-items: stretch;
+    }
+    .Dividir--longo > .Moldura {
+        position: relative;
+        top: 0;
+    }
+    .Jane {
+        font-size: 1.05rem;
+        text-align: left;
+    }
+    .Linha li {
+        text-align: left;
+    }
+    .Citacao {
+        font-size: 1.9rem;
+    }
+}
+
+/* Âncoras não ficam escondidas atrás do cabeçalho fixo */
+[id] {
+    scroll-margin-top: 70px;
+}
+
+/* Destaques em texto corrido usam o vermelho brilhante para ter contraste no fundo preto */
+.Jane .destaque,
+.Portal .Juno .destaque {
+    color: var(--glow-color);
+}
+
+/* Seção mais larga para os cards dos Avatares */
+.Capitulo--largo {
+    padding-left: 7%;
+    padding-right: 7%;
+}
+
+/* Oito Avatares: 4 colunas no desktop, 2 no tablet, 1 no celular */
+.Grade--oito {
+    grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 1011px) {
+    .Grade--oito {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 560px) {
+    .Grade--oito {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Imagem do Avatar no rodapé de cada card de Epitaph */
+.Epitaph .Epitaph-img {
+    margin-top: auto;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: contain;
+    padding: 4px;
+    background: #fff;
+    border: 2px solid var(--first-color);
+    border-radius: 6px;
 }
